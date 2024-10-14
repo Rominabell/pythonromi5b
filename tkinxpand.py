@@ -24,17 +24,22 @@ class MenuApp:
         barra_menus.add_cascade(label="Cálculos", menu=calc_calculos)
 
         
-        calc_calculos= Menu(barra_menus, tearoff=0)
-        barra_menus.add_cascade(label="Salir", menu=calc_calculos)
+        salir= Menu(barra_menus, tearoff=0)
+        barra_menus.add_cascade(label="Salir")
 
         # Agregar opciones al menú "Excel"
         menu_excel.add_command(label="Todos", command=self.show_all)
         menu_excel.add_command(label="Nombre", command=self.show_name)
-        menu_excel.add_command(label="Mayores de 18", command=self.show_over_18)
+        menu_excel.add_command(label="Edad", command=self.show_age)
+        menu_excel.add_command(label="Sexo", command=self.show_sex)
+        menu_excel.add_command(label="catHermanos", command=self.show_brother)
 
-        calc_calculos.add_command(label="Promedio", command=self.show_all)
-        calc_calculos.add_command(label="Mediana", command=self.show_all)
-        calc_calculos.add_command(label="Moda", command=self.show_all)
+        
+
+
+        calc_calculos.add_command(label="Promedio", command=self.show_mean)
+        calc_calculos.add_command(label="Mediana", command=self.show_median)
+        calc_calculos.add_command(label="Moda", command=self.show_mode)
         
 
         # Configurar la barra de menú en la ventana principal
@@ -48,18 +53,40 @@ class MenuApp:
        self.text_area.insert('end',str(self.estudiantes))
 
     def show_name(self):
-        name = simpledialog.askstring("Nombre", "Introduce tu nombre:")
-        if name:
-            messagebox.showinfo("Nombre ingresado", f"Tu nombre es: {name}")
+        self.clear_text_area()
+        self.text_area.insert('end',str(self.estudiantes["nombreApellido"]))
 
-    def show_over_18(self):
-        age = simpledialog.askinteger("Edad", "Introduce tu edad:")
-        if age is not None:
-            if age >= 18:
-                messagebox.showinfo("Acceso permitido", "Eres mayor de 18 años.")
-            else:
-                messagebox.showwarning("Acceso denegado", "Eres menor de 18 años.")
+    def show_age(self):
+        self.clear_text_area()
+        self.text_area.insert('end',str(self.estudiantes["edad"]))
 
+    def show_sex(self):
+        self.clear_text_area()
+        self.text_area.insert('end',str(self.estudiantes["sexo"]))
+
+    def show_poli(self):
+        self.clear_text_area()
+        self.text_area.insert('end',str(self.estudiantes["estadoCivil"]))
+
+    def show_brother(self):
+        self.clear_text_area()
+        self.text_area.insert('end',str(self.estudiantes["catHermanos"]))
+
+    def show_median(self):
+        self.clear_text_area()
+        self.text_area.insert('end',str(self.estudiantes["edad"].median))
+         
+    def show_mode(self):
+        self.clear_text_area()
+        self.text_area.insert('end',str(self.estudiantes["edad"].mode))
+         
+    def show_mean(self):
+        self.clear_text_area()
+        self.text_area.insert('end',str(self.estudiantes["edad"].mean))
+         
+
+    
+    
 class App:
     def __init__(self):
         self.root = Tk()
