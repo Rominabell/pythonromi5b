@@ -23,9 +23,17 @@ class MenuApp:
         calc_calculos= Menu(barra_menus, tearoff=0)
         barra_menus.add_cascade(label="Cálculos", menu=calc_calculos)
 
+
+    
         
-        salir= Menu(barra_menus, tearoff=0)
-        barra_menus.add_cascade(label="Salir")
+        salir = Menu(barra_menus, tearoff=0)
+        salir.add_command(label="Salir", command=self.exit_app)  
+        barra_menus.add_cascade(label="Salir", menu=salir)
+
+       
+       
+        
+
 
         # Agregar opciones al menú "Excel"
         menu_excel.add_command(label="Todos", command=self.show_all)
@@ -44,6 +52,10 @@ class MenuApp:
 
         # Configurar la barra de menú en la ventana principal
         self.master.config(menu=barra_menus)
+
+    
+    def exit_app(self):
+        self.master.quit()  
 
     def clear_text_area(self):
         self.text_area.delete(1.0,'end')
@@ -72,18 +84,25 @@ class MenuApp:
         self.clear_text_area()
         self.text_area.insert('end',str(self.estudiantes["catHermanos"]))
 
-    def show_median(self):
-        self.clear_text_area()
-        self.text_area.insert('end',str(self.estudiantes["edad"].median))
-         
-    def show_mode(self):
-        self.clear_text_area()
-        self.text_area.insert('end',str(self.estudiantes["edad"].mode))
-         
+
+        
+
+
     def show_mean(self):
         self.clear_text_area()
-        self.text_area.insert('end',str(self.estudiantes["edad"].mean))
+        self.text_area.insert('end', str(self.estudiantes["edad"].mean()))  
+
+    def show_median(self):
+        self.clear_text_area()
+        self.text_area.insert('end', str(self.estudiantes["edad"].median())) 
+
+    def show_mode(self):
+        self.clear_text_area()
+        mode_values = self.estudiantes["edad"].mode()
+        self.text_area.insert('end', str(mode_values.values))  # Mostrar todos los valores de la moda
+
          
+
 
     
     
@@ -97,6 +116,7 @@ class App:
 
     def run(self):
         self.root.mainloop()
+
 
 if __name__== "__main__":
     app = App()
